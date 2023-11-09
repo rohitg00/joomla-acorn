@@ -1,0 +1,16 @@
+containers: joomla: {
+	image: "joomla:latest"
+	ports: publish: "80/http"
+	env: {
+		JOOMLA_DB_CLIENT: "mysql"
+		JOOMLA_DB_HOST: "@{service.db.address}"
+		JOOMLA_DB_USER: "@{service.db.secrets.admin.username}"
+		JOOMLA_DB_PASSWORD: "@{service.db.secrets.admin.password}"
+		JOOMLA_DB_NAME: "@{service.db.data.dbName}"
+	}
+}
+
+services: db: {
+	image: "ghcr.io/acorn-io/mariadb:v10.11.5-2"
+	serviceArgs: dbName: "joomla"
+}
